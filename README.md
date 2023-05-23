@@ -1,6 +1,6 @@
 # **✨ Marketing Campaign - by Datalicious ✨**
 
-![banner.png](https://raw.githubusercontent.com/nurimammasri/Marketing-Campaign-Model-Prediction-by-Datalicious/main/assets/banner.png)
+![banner.png](https://drive.google.com/uc?id=1xGfw9uqqFPQoAUGjSp7qqW8VEdVnEoF8)
 
 **✅ Members of Datalicious ✅**
 
