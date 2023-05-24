@@ -14,6 +14,12 @@
 8. Christine
 9. M. Ifzal Asril
 
+## **Script**
+
+**Open in Colab**
+
+- [Response Prediction Classification Marketing Campaign.ipynb](https://colab.research.google.com/github/nurimammasri/Marketing-Campaign-Model-Prediction-by-Datalicious/blob/main/Response%20Prediction%20Classification%20Marketing%20Campaign.ipynb)
+
 ## **⛳ Business Understanding ⛳**
 
 ### **📌 Problem Statement**
