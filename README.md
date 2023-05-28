@@ -36,7 +36,7 @@
 
 [Marketing campaign](https://www.kaggle.com/datasets/rodsaldanha/arketing-campaign "Marketing campaign dataset from Kaggle")
 
-## **Script**
+## **💻 Script 💻**
 
 **Open in Colab**
 
