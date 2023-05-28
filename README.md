@@ -608,3 +608,124 @@ Berdasarkan chart diatas dapat dilihat bahwa kelompok umur yang paling banyak me
 
 Dari visualisasi piechart Education, dapat dilihat bahwa customer yang merespon terbanyak berasal dari customer yang memiliki edukasi Graduation dan PhD, sehingga marketing team dapat memfokuskan campaign ke customer yang beredukasi Graduation.
 
+### **Marital Status vs Response**
+
+Jumlah customer paling banyak menerima respon berdasarkan status penikahan yaitu Married dan orang yang masih single, sehingga pada campaign selanjutnya perusahaan sebaiknya memfokuskan kepada customer yang telah menikah (Married)
+
+Sedangkan untuk "Absurd" dan "Yolo" pada data "Others" sangat sedikit
+
+### **Kids and Teens (Dependents) vs. Response**
+
+Semakin tinggi jumlah anak/remaja yang dimiliki customer, maka semakin kecil kemungkinan customer menerima Response (marketing campaign terakhir), sehingga lebih baik perusahaan menargetkan campaign kepada customer yang tidak memiliki anak/remaja.
+
+Dari visualisasi kidhome dan teenhome, dapat dilihat bahwa customer yang merespon terbanyak berasal dari customer yang tidak mempunyai anak dan tidak mempunyai remaja (0.265403), sehingga marketing team dapat memfokuskan campaign ke customer yang tidak mempunyai anak dan tidak mempunyai remaja.
+
+### **Recency vs. Response**
+
+Berdasarkan recency (kapan terakhir kali customer melakukan pembayaran), semakin rendah recency maka semakin besar kemungkinan customer tersebut menerima marketing campaign perusahaan yang terakhir (Response). Sehingga marketing campaign selanjutnya dapat difokuskan kepada customer dengan recency yang rendah.
+
+
+* Recency rendah : waktu purchase terakhir pelanggan dengan produk.belum terlalu lama
+
+
+### **Income vs Response**
+
+Jumlah customer paling banyak menerima respon berdasarkan pendapatan yaitu orang-orang yang memilik pendapatan sebesar 80000, sehingga pada campaign selanjutnya perusahaan sebaiknya lebih memfokuskan kepada orang dengan pendapatan 80000 
+
+
+### **Purchase type vs. Response**
+
+Semakin sedikit pembelian yang dilakukan (baik yang menggunakan diskon ataupun yang melalui web, catalog, store), maka semakin besar kemungkinan customer untuk menerima Response (marketing campaign terakhir). Sehingga perusahaan dapat menargetkan campaign kepada customer dengan jumlah pembelian yang masih sedikit.
+
+### **Purchase type vs. Complain**
+
+- Customer dengan Purchase lebih rendah -> Memiliki Jumlah Complain Tinggi, tapi Response Tinggi
+
+    Perusahaan sebaiknya meningkatkan kualitas pelayanan, agar respone sejalan dengan tingkat kepuasan pelanggan untuk mengurangi complain customer
+
+- Customer dengan Purchase lebih tinggi -> Memiliki Jumlah Complain Rendah, tapi Response Rendah
+
+    Bisa dilakukan penelaah kembali hal-hal yang membuat customer dengan purchase lebih tinggi, cenderung rendah pada tingkat response
+    
+    
+### **Income x Spending for Response**
+
+Income dan Spending memiliki korelasi positif pada response, dimana semakin tinggi nilai income dan spending semakin besar tingkat respon sehingga fitur income dan spending perlu dipertahankan
+
+### **Income Segment vs. Response**
+
+Higher the income, more likely to give response for campaign
+
+Customer yang merespon campaign cenderung memiliki income yang lebih tinggi, terbukti dari customer yang memiliki income “High” level  merespon campaign lebih banyak.
+
+### **Income Segment vs Product**
+
+Customer dengan income High dan Medium lebih suka dengan produk Gold dan Fish. Oleh karena itu, jika ingin membuat campaign disarankan untuk memberikan campaign produk Gold dan Fish untuk cutomer dengan income tersebut.
+
+### **Income Segment vs Purchase Type**
+
+Kemudian pada pembuatan campaign, disarankan berbentuk Catalog atau Diskon dan lebih banyak diarahkan ke customer dengan income High / Medium. untuk opsi kedua, bisa langsung dibuat banner/booth pada Store.
+
+### **Product vs. Response**
+
+Customer yang merespon campaign cenderung lebih banyak membeli Wines dan Meat products. Sehingga untuk campaign selanjutnya produk Wines dan Meat menjadi rekomendasi produk utama untuk customer yang merespon.
+
+### **Total Campaign vs Num Values**
+
+Berikut adalah insights yang diperoleh berdasarkan Total Campaign vs Variable:
+
+- `Income`:
+    Customer yang menerima total 4 campaign cenderung memiliki income yang lebih tinggi.
+- `Kidhome:` 
+    Customer yang tidak menerima campaign sama sekali memiliki kidhome lebih banyak.
+- `Teenhome`:
+    Customer yang tidak menerima campaign sama sekali memiliki Teenhome lebih banyak.
+- `Recency`:
+    Customer yang menerima total 3 campaign cenderung memiliki recency (total hari terakhir berbelanja) yang lebih lama.
+- `MntWines`:
+    Customer yang menerima total 4 campaign cenderung membeli produk Wines lebih banyak.
+- `MntFruits`:
+    Customer yang menerima total 3 campaign cenderung membeli produk Fruits lebih banyak.
+- `MntMeatProducts`:
+    Customer yang menerima total 3 campaign cenderung membeli produk Meat lebih banyak.
+- `MntFishProducts`:
+    Customer yang menerima total 3 campaign cenderung membeli produk Fish lebih banyak.
+- `MntSweetProducts`:
+    Customer yang menerima total 3 campaign cenderung membeli produk Sweet lebih banyak.
+- `MntGoldProducts:` 
+    Customer yang menerima total 3 campaign cenderung membeli produk Gold lebih banyak.
+- `NumDealsPurchases`:
+    Customer yang tidak menerima campaign sama sekali lebih sering membeli produk menggunakan diskon.
+- `NumWebPurchases`:
+    Customer yang menerima total 2 dan 3 campaign cenderung lebih sering membeli produk melalui web.
+
+- `NumCatalogPurchases`:
+    Customer yang menerima total 4 campaign cenderung lebih sering membeli produk melalui katalog.
+- `NumStorePurchases`:
+    Customer yang menerima total 4 campaign cenderung lebih sering membeli produk melalui toko.
+- `NumWebVisitsMonths`:
+    Customer yang tidak menerima campaign sama sekali lebih sering melakukan web visit pada bulan terakhir.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
