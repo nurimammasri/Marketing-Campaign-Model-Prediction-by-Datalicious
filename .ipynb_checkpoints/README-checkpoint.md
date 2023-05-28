@@ -1,6 +1,6 @@
 # **✨ Marketing Campaign - by Datalicious ✨**
 
-![banner.png](https://drive.google.com/uc?id=1xGfw9uqqFPQoAUGjSp7qqW8VEdVnEoF8)
+<img src="https://raw.githubusercontent.com/nurimammasri/Marketing-Campaign-Model-Prediction-by-Datalicious/main/assets/banner.png">
 
 **✅ Members of Datalicious ✅**
 
@@ -36,7 +36,7 @@
 
 [Marketing campaign](https://www.kaggle.com/datasets/rodsaldanha/arketing-campaign "Marketing campaign dataset from Kaggle")
 
-## **Script**
+## **💻 Script 💻**
 
 **Open in Colab**
 
