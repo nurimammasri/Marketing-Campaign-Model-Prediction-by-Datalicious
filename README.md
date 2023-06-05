@@ -42,6 +42,36 @@
 
 - [Response Prediction Classification Marketing Campaign.ipynb](https://colab.research.google.com/github/nurimammasri/Marketing-Campaign-Model-Prediction-by-Datalicious/blob/main/Response%20Prediction%20Classification%20Marketing%20Campaign.ipynb)
 
+## **📍 Table of Content 📍**
+<!--ts-->
+* **Business Understanding**
+    * [Problem Statement](#-business-understanding-)
+    * [Roles](#-roles)
+    * [Goals](#-goals)
+    * [Objectives](#-objectives)
+    * [Business Metrics](#-business-metrics)
+* **Data Preparation**
+    * [Data Description](#-data-description-)
+    * Libraries & Datasets
+* **Data Understanding**
+    * [Exploring Datasets](#-data-understanding-)
+    * [Data Types Information](#-data-types-information)
+    * [Statistical Summary](#-statistical-summary)
+    * [EDA (Exploratory Data Analysis)](#-exploratory-data-analysis-eda)
+    * [Feature Engineering / Extraction (Business Insight)](#-feature-engineering--extraction)
+    * [Business Insight](#-business-insight)
+* **Data Cleansing/Preprocessing**
+    * [Handling Missing Values]()
+    * [Handling Duplicated Rows]()
+    * [Handling Invalid Values]()
+    * [Handling Outliers]()
+    * [Feature Engineering / Extraction]()
+    * [Feature Transformation (Numeric)]()
+    * [Feature Encoding (Categoric)]()
+    * [Feature Selection]()
+    * [Handling Imbalanced Data]()
+<!--te-->
+
 ## **⛳ Business Understanding ⛳**
 
 ### **📌 Problem Statement**
