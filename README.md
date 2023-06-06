@@ -974,23 +974,474 @@ Berdasarkan hasil pengecekan, Untuk kolom `Dt_Customer` sebelumnya masih berbent
 
 ## **📌 Handling Outliers**
 
+![image](https://github.com/nurimammasri/Marketing-Campaign-Model-Prediction-by-Datalicious/assets/54845293/82cb2648-4896-4e7f-ba2b-1616f1a9d3e5)
+
+![image](https://github.com/nurimammasri/Marketing-Campaign-Model-Prediction-by-Datalicious/assets/54845293/4510b7f1-cc69-4513-ab42-258f2f7b5f60)
+![image](https://github.com/nurimammasri/Marketing-Campaign-Model-Prediction-by-Datalicious/assets/54845293/140f65ab-c55b-41b5-a929-4f35c3b8a5bd)
+![image](https://github.com/nurimammasri/Marketing-Campaign-Model-Prediction-by-Datalicious/assets/54845293/ae73a9b9-a8be-4bcd-8cb5-a9336b619ba5)
+
+Karena pada kolom `Year_Birth` memiliki nilai min yang sangat jauh di tahun `1893-1900`
+
+dan `Income` memiliki nilai max yang sangat tinggi sebesar `$666.666`
+
+Maka akan dilakukan Penghapusan rows pada nilai ini agar tidak ada ketimpangan nilai. Ada beberapa metode yang dapat kita lakukan :
+- **Handling Oulier**
+    - IQR (Interquartile Range)
+    - Z-Score
+- **Manually Trimmed**
+
+**Choice Determination:**
+
+- Untuk kasus saat ini, akan digunakan metode `Manually Trimmed`, agar menghindari penghapusan data yang terlalu banyak jika menggunakan Handling Outlier
+- Adapaun pada kolom lainnya `selain Year_Birth dan Income` yang terdapat outlier tidak kita handle karena akan melalui proses `Normal Distribution Transformation` nantinya yang akan `mereduksi outliernya.`
+
+**Manually Trimmed**
+
+- Kolom `Year_Birth`, menghapus nilai yang sangat jauh di tahun `1893-1900`
+- Kolom `Income` menghapus nilai yang sangat tinggi sebesar `$666.666`
+
+![image](https://github.com/nurimammasri/Marketing-Campaign-Model-Prediction-by-Datalicious/assets/54845293/504e3f4a-97bc-4da6-b8c9-536bb6fc0e49)
+
+**Kesimpulan**
+Berdasarkan hasil perhitungan menggunakan `Z-score` dan juga `IQR`, dapat diketahui bahwa jumlah baris yang dihapus dari `Year_Birth` dan `Income` berdasarkan `IQR` untuk kolom  tidak jauh berbeda dibandingkan dengan `Z-score`, yaitu :
+- IQR :
+    - Jumlah data sebelum handling outliers : 2240
+    - Jumlah data setelah handling outliers (Year_Birth) : 2237
+    - Jumlah data setelah handling outliers (Income) : 2229
+
+- Z_Score :
+    - Jumlah data sebelum handling outliers : 2240
+    - Jumlah data setelah handling outliers (Year_Birth) : 2237
+    - Jumlah data setelah handling outliers (Income) : 2229
+
+Namun, karena kita ingin meminimalisasi penghapusan data maka untuk proses ini kita memiliki `Manually Trimmed` agar tidak terlalu banyak data yang dihapus, jadi hanya berfokus pada data yang memiliki jauh yang sangat tinggi
+
+- Jumlah data sebelum handling outliers : 2240
+- Jumlah data setelah handling outliers (Year_Birth) : 2237
+- Jumlah data setelah handling outliers (Income) : 2236
+
+## **📌 Feature Engineering / Extraction**
+
+Kita akan melakukan Calculation, Extraction, dan Binning features :
+- Age Customer
+- Age Group
+- Has Child
+- Dependents
+- Month Customer (Lifetime)
+- Spending
+- Primer and Tersier product
+- Total of Purchases
+- Total_Cmp (Accepted Campaign 1-5)
+- Ever_Accept (Accepted Campaign 1-5)
+- Total Revenue
+- Income Segment
+- Conversion Rate Web
+- Month Joined
+- Recency Segment
+
+**Membuat Kolom `Umur / Age`**
+
+Berdasarkan data diketahui basis tahunnya : SAS Institute, 2014
+
+**Membuat Kolom `Age Group`** 
+
+[source age group](https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.semanticscholar.org%2Fpaper%2FHuman-Age-Group-Classification-Using-Facial-Bhat-V.K.Patil%2F19ddb412336ce633c1fe21544605c7bd65ff8d66&psig=AOvVaw3Sm17zYYJRrkisQVRyg4rf&ust=1684919686463000&source=images&cd=vfe&ved=0CBMQjhxqFwoTCJDXlY2Ni_8CFQAAAAAdAAAAABAI)
+
+![image](https://github.com/nurimammasri/Marketing-Campaign-Model-Prediction-by-Datalicious/assets/54845293/7f19ab5e-b8db-4728-b83c-d68e14ddf5d7)
+
+Akan disederhanakan lagi :
+- Young Adult < 30
+- Adult 30-45 Tahun
+- Senior Adult > 45 tahun
+
+**Membuat Kolom `Has_child`**
+
+Menggabungkan Kidhome dan Teenhome menjadi feature Has_child, yang mana hasil penjumlahannya yang memiliki anak minimal 1
+
+**Membuat Kolom `Dependents`**
+
+Jumlah tanggungan dari customer, dari penjumlahan Kidhome dan Teenhome
+
+**Membuat Kolom `Lifetime`**
+
+Sudah berapa bulan customer sejak pembelian pertama di supermarket
+
+**Membuat Kolom `Spending`**
+
+Jumlah pembelian tiap customer pada keseluruhan product
+
+**Membuat Kolom `Primer and Tersier product`**
+
+Jumlah pembelian tiap customer pada kelompok primer dan tersier product
+
+**Membuat Kolom `Total of Purchases`**
+
+Jumlah pembelian tiap customer pada keseluruhan metode pembelian. 
+
+**Membuat Kolom `Total_Cmp`**
+
+Berapa kali tiap customer merespon ke 5 campign yang dilaksanakan (AcceptedCmp 1 - 5)
+
+**Membuat Kolom `Ever_Accept`**
+
+Apakah Customer pernah minimal sekali menerima campign atau tidak pernah sama sekali
+
+**Membuat Kolom `Total Revenue`**
+
+Jumlah Campaign yang diresponse/accept (Campaign 1-5) dikali dengan revenue = 11
+
+**Membuat Kolom `Income Segmentation`**
+
+- None -> Missing values
+- High -> >= q3(68468)
+- Medium -> q1(35335) - q3(68468)
+- Low -> < q1(35335)
+
+**Membuat Kolom `Conversion Rate Web`**
+
+Perbandingan Total Purchases dengan Jumlah Pengunjung Website
+
+**Membuat Kolom `Month Joined`**
+
+Membuat kolom extraction month dari tanggal Customer pertama kali berbelanja
+
+Note : Untuk nilai tahun tidak digunakan karena berpotensi bias karena dari nilai nya akan increasing tiap waktu, sedangkan month akan repeat pada tiap periode
+
+**Membuat Kolom `Recency_sgmt`**
+
+![image](https://github.com/nurimammasri/Marketing-Campaign-Model-Prediction-by-Datalicious/assets/54845293/67179e33-ba86-402d-948a-be1bcc795c79)
+
+Perkiraan pembagian dengan rentang 19 Hari:
+- 4 score -> setengah bulan
+- 3 score -> 1 bulan
+- 2 score -> 1 setengah bulan
+- 1 score -> 2 bulan
+- 0 score -> 3 bulan
+
+#### **Mengecek nilai Extraction**
+
+**Categorical (String)**
+
+- Education - Basic, Graduation, Master, PhD
+- Marital_Status - Single, Married, Divorced
+- Age_group - Young Adult, Adult, Senior Adult
+- Income_sgmt - High, Medium, Low
+
+**Categorical (Int)**
+
+- ID
+- Kidhome - 0, 1, 2
+- Teenhome - 0, 1, 2
+- AcceptedCmp1 - 0, 1
+- AcceptedCmp2 - 0, 1
+- AcceptedCmp3 - 0, 1
+- AcceptedCmp4 - 0, 1
+- AcceptedCmp5 - 0, 1
+- Ever_Accept - 0, 1
+- Complain - 0, 1
+- Response - 0, 1
+- Has_child - 0, 1
+- Recency_sgmt - 0, 1, 2, 3, 4
+
+**Numericals**
+
+- Year_Birth = 1940 - 1996
+- Income = 1730.0 - 162397.0
+- Kidhome = 0 - 2
+- Teenhome = 0 - 2
+- Recency = 0 - 99
+- Age = 18 - 74
+- Dependents = 0 - 3
+- Lifetime = 1 - 36
+- Spending = 5 - 2525
+- Primer_purchase = 1 - 1727
+- Tersier_purchase = 3 - 1689
+- Total_Purchases = 0 - 44
+- NumWebVisitsMonth = 0 - 20
+- Conversion_rate_web = 0.0 - 43.0
+- Total_Cmp = 0 - 4
+- Total_revenue = 0 - 44
+- Month_joined = 1 - 12
+
+**Numericals (one)**
+
+- Z_CostContact = 3
+- Z_Revenue = 11
+
+**Numericals (Product)**
+
+- MntWines = 0 - 1493
+- MntFruits = 0 - 199
+- MntMeatProducts = 0 - 1725
+- MntFishProducts = 0 - 259
+- MntSweetProducts = 0 - 263
+- MntGoldProds = 0 - 362
+
+**Numericals (Purchases)**
+
+- NumDealsPurchases = 0 - 15
+- NumWebPurchases = 0 - 27
+- NumCatalogPurchases = 0 - 28
+- NumStorePurchases = 0 - 13
+
+**Timestamp**
+- Dt_Customer = 2012-07-30 - 2014-06-29
 
 
+## **📌 Feature Transformation (Numeric)**
 
+![image](https://github.com/nurimammasri/Marketing-Campaign-Model-Prediction-by-Datalicious/assets/54845293/4962331e-fede-4185-9b24-676068f53654)
 
+Dari hasil temuan, kita dapat menentukan beberapa transformasi yang akan kita lakukan :
+- **Scaling and Converting to a Normal Distribution :**
+    - log Transformation
+    - Box-Cox Transformation
+    - Yeo-Johnson Transformation
+    
+    **Adapun daftar column yang akan kita transform pada proses ini :**
+        - Conversion_rate_web
+        - MntFishProducts
+        - MntFruits
+        - MntGoldProds
+        - MntMeatProducts
+        - MntSweetProducts
+        - MntWines
+        - NumCatalogPurchases
+        - NumDealsPurchases
+        - NumStorePurchases
+        - NumWebPurchases
+        - Primer_purchase
+        - Spending
+        - Tersier_purchase
+        - Total_revenue
+    
+- **Just Scaling :**
+    - Normalization
+    - Standardization
+    
+    **Adapun daftar column yang akan kita transform pada proses ini :**
+        - Age
+        - Income
+        - Lifetime
+        - Month_joined
+        - NumWebVisitsMonth
+        - Recency
+        - Total_Purchases
+        - Year_Birth
 
+- Sedangkan untuk beberapa kolom yang **tidak perlu melakukan Transformasi** karena rentang nilai yang masih wajar sebagai berikut :
+    - Kidhome
+    - Teenhome
+    - Dependents
+    - Total_Cmp
 
+**Choice Determination:**
 
+- Pada proses `Scaling and Converting to a Normal Distribution` ini kita menggunakan `Yeo-Johnson Transformation`, karena dari hasilnya kita bisa melihat hasil bentuk curve yang lebih Normal Distribusi
+- Pada proses `Just Scaling` ini kita menggunakan `Normalization` karena lebih robust untuk algoritma yang akan kita gunakan 
 
+**Yeo-Johnson Transformation**
 
+Unlike the Box-Cox transform, it does not require the values for each input variable to be strictly positive.
 
+It supports zero values and negative values. This means we can apply it to our dataset without scaling it first.
 
+```html
+pt = PowerTransformer(method='yeo-johnson')
+df[log_cols] = pt.fit_transform(df[log_cols])
+```
 
+![image](https://github.com/nurimammasri/Marketing-Campaign-Model-Prediction-by-Datalicious/assets/54845293/2c896c5e-4141-4085-ab20-490fb1d53ac0)
 
+**Normalization**
 
+```html
+from sklearn.preprocessing import MinMaxScaler
+# create a scaler object
+scaler = MinMaxScaler()
+# fit and transform the data
+df[norm_cols] = pd.DataFrame(scaler.fit_transform(df[norm_cols]), columns=df[norm_cols].columns)
+```
 
+**Kesimpulan**
 
+Berdasarkan hasil pengecekan pada beberapa fitur yang telah diproses menggunakan transformation sebelumnya, dapat diketahui bahwa keseluruhan nilai skewnessnya sudah memiliki rentang yang lebih seragam (tidak jauh dan tidak terlalu bervariasi). Sehingga dapat disimpulkan bahwa teknik fitur transformation yang telah kami lakukan sudah valid dan kami.
 
+## **📌 Feature Encoding (Categoric)**
+
+```html
+===== Education =====
+['Graduation', 'PhD', 'Master', 'Basic']
+
+===== Marital_Status =====
+['Single', 'Married', 'Divorced']
+
+===== Age_group =====
+['Senior Adult', 'Young Adult', 'Adult']
+
+===== Income_sgmt =====
+['Medium', 'High', 'Low']
+```
+Dari hasil temuan, kita dapat menentukan beberapa encoding yang akan kita lakukan :
+- **Label Encoding :**
+    - LabelEncoder
+    - Manually Mapped
+    
+    **Adapun daftar column yang akan kita proses :**
+    - `Education` - Basic (0), Graduation (1), Master (2), PhD (3)
+    - `Age_group` - Young Adult (0), Adult (1), Senior Adult (2)
+    - `Income_sgmt` - Low (0), Medium (1), High (2)
+    
+- **One Hot Encoding :**
+    - get_dummies
+    - OneHotEncoder
+    
+    **Adapun daftar column yang akan kita proses :**
+    - `Marital_Status` - Single, Married, Divorced
+
+**Choice Determination:**
+
+- Pada proses `Label Encoding` ini kita menggunakan `Manually Mapped`, karena kita bisa menentukan secara fleksible urutan/order dari categorical feature
+- Pada proses `One Hot Encoding` ini kita menggunakan `OneHotEncoder`, karena hasil encodingnya lebih rapi dan lebih mudah untuk dilakukan adjust
+
+**Kesimpulan**
+
+Berdasarkan hasil pengecekan pada beberapa fitur yang telah diproses menggunakan encoding sebelumnya, dapat diketahui bahwa keseluruhan nilai telah beripe numeric sesuai dengan nilai yang kita assign. Sehingga dapat disimpulkan bahwa teknik fitur encoding yang telah kami lakukan sudah valid dan kami.
+
+## **📌 Feature Selection**
+
+Ada beberapa fitur yang telah diproses menggunakan feature selection :
+- Drop Unnecessary Feature
+- Univariate Selection
+    - Anova F-value
+    - Variance Threshold
+    - Mutual Information
+    - SelectKBest
+- Feature Importance
+- Pearson Correlation
+- Drop Redundace
+
+### **1. Drop Unnecessary Feature**
+
+- Drop kolom `ID` karena memiliki banyak kategori dan tidak berguna untuk pemodelan
+- Drop kolom `Year_Birth` sudah dilakukan Feature extraction untuk mengambil data Umur/Age pada range tahun saat ini 2014 (sesuai pada data)
+- Drop kolom `Dt_Customer` karena tidak terlalu mempengaruhi model prediksi
+- Drop kolom `Z_CostContact` (3) dan `Z_Revenue` (11) karena  hanya memiliki satu nilai, tidak memberikan informasi yang signifikan terhadap model prediksi
+
+### **2. Univariate Selection**
+
+- #### **ANOVA F-value**
+
+![image](https://github.com/nurimammasri/Marketing-Campaign-Model-Prediction-by-Datalicious/assets/54845293/adc3f215-9dd5-424b-b20c-53a61e328c8a)
+
+- #### **Variance Threshold**
+
+![image](https://github.com/nurimammasri/Marketing-Campaign-Model-Prediction-by-Datalicious/assets/54845293/6a369f9b-f13e-46a1-abeb-6fa28a0e960d)
+
+- #### **Mutual information**
+
+![image](https://github.com/nurimammasri/Marketing-Campaign-Model-Prediction-by-Datalicious/assets/54845293/fce9e499-0769-4e3a-b8fa-5c3af1e351e3)
+
+- #### **Scikit-learn’s SelectKBest**
+
+![image](https://github.com/nurimammasri/Marketing-Campaign-Model-Prediction-by-Datalicious/assets/54845293/fdb9ba08-f74b-466a-b576-b8549447682d)
+
+### **3. Feature Importance**
+
+![image](https://github.com/nurimammasri/Marketing-Campaign-Model-Prediction-by-Datalicious/assets/54845293/03a29c62-7ad0-4c0b-9021-6b11741e4a60)
+
+### **4. Correlation Matrix with Heatmap**
+
+- Correlation states how the features are related to each other or the target variable.
+
+- Correlation can be positive (increase in one value of feature increases the value of the target variable) or negative (increase in one value of feature decreases the value of the target variable)
+
+- Heatmap makes it easy to identify which features are most related to the target variable, we will plot heatmap of correlated features using the seaborn library.
+
+- Cek Feature Redundan pada korelasi Antar Feature, Drop salah satunya, yang rendah korelsinya dengan Response (target)
+
+![image](https://github.com/nurimammasri/Marketing-Campaign-Model-Prediction-by-Datalicious/assets/54845293/0e6b13a0-edf4-4dd1-be56-46092925d577)
+
+![image](https://github.com/nurimammasri/Marketing-Campaign-Model-Prediction-by-Datalicious/assets/54845293/9f660917-acd4-4669-a6c6-8f116e5520d6)
+
+### **5. Check Data Redundancy**
+
+Dari feature yang telah kita pilih dari gabungan Top 20 akan di lakukan pengecekan kembali melalui `redudansi antar feature`. Pada proses ini kita memilih antar feature yang memiliki korelasi diatas `threshold > 0.70`, yang kemudian akan di `bandingkan korelasinya dengan Target` untuk `drop salah satu feature`
+
+![image](https://github.com/nurimammasri/Marketing-Campaign-Model-Prediction-by-Datalicious/assets/54845293/490e565d-5bb6-4423-928f-e152cf117bd3)
+
+Maka telah didapatkan feature yang akan digunakan pada proses modelling sebagai berikut :
+
+```html
+['AcceptedCmp1',
+ 'AcceptedCmp2',
+ 'AcceptedCmp3',
+ 'AcceptedCmp4',
+ 'Dependents',
+ 'Education',
+ 'Lifetime',
+ 'Married',
+ 'MntGoldProds',
+ 'NumCatalogPurchases',
+ 'NumDealsPurchases',
+ 'NumWebVisitsMonth',
+ 'Recency',
+ 'Recency_sgmt',
+ 'Total_Cmp']
+```
+
+## **📌 Data Splitting**
+
+I will split the data into training set and testing set with proportion of 75:25.
+
+```html
+# define X and y
+X = df.drop(['Response'], axis=1)[feature_importance] #features
+y = df['Response'] #target
+```
+
+```html
+from sklearn.model_selection import train_test_split
+
+# splitting tha data
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.25, stratify= y, random_state=42)
+print(X_train.shape, X_test.shape)
+```
+
+## **📌 Handling Imbalanced Data**
+
+Status risiko highly imbalanced, dengan 15% Response dan 85% No Response. Itu sebabnya diperlukan resampling.
+
+**Note**: Saat menerapkan  machine learning algorithms dengan data yang tidak seimbang, model yang diperoleh akan lebih condong ke kelas mayoritas. Artinya model akan memprediksi kelas mayoritas bukan kelas minoritas.
+
+Jika kita ingin melakukan klasifikasi, maka seharusnya melakukan `stratified train_test_split` terlebih dahulu untuk menjaga ketidakseimbangannya (imbalance). Sehingga dataset test dan train memiliki distribusi yang sama, kemudian jangan pernah menyentuh test set lagi. Kemudian lakukan pengambilan sampel ulang hanya pada data train.
+
+**Summary** : You must apply `SMOTE` after splitting into `training and test`, not before. Doing SMOTE before is bogus and defeats the purpose of having a separate test set.
+
+![image](https://github.com/nurimammasri/Marketing-Campaign-Model-Prediction-by-Datalicious/assets/54845293/499d8c10-193b-45d7-9502-ed1da4604c47)
+
+```html
+from imblearn.under_sampling import RandomUnderSampler
+from imblearn.over_sampling import RandomOverSampler, SMOTE
+
+....
+
+# Oversampling SMOTE
+sm = SMOTE(sampling_strategy=0.5, random_state = 2)
+X_balanced_res, y_balanced_res = sm.fit_resample(X_train,y_train)
+```
+
+Before OverSampling, the shape of X_train: (1677, 15)
+Before OverSampling, the shape of y_train: (1677,) 
+
+Before OverSampling, counts of label '1': 251
+Before OverSampling, counts of label '0': 1426 
+
+After OverSampling, the shape of X_train: (2139, 15)
+After OverSampling, the shape of y_train: (2139,) 
+
+After OverSampling, counts of label '1': 713
+After OverSampling, counts of label '0': 1426
 
 
 
