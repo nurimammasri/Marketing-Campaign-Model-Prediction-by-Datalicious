@@ -738,6 +738,277 @@ Berikut adalah insights yang diperoleh berdasarkan Total Campaign vs Variable:
 
 
 
+# **🏝 Data Cleansing/Preprocessing 🏝**
+
+## **📌 Handling Missing Value**
+
+```html
+Missing values status: True
+                     Total Null Values  Percentage Data Type
+Income                              24    1.071429     int64
+ID                                   0    0.000000     int64
+Z_CostContact                        0    0.000000     int64
+Complain                             0    0.000000    object
+AcceptedCmp2                         0    0.000000    object
+AcceptedCmp1                         0    0.000000   float64
+AcceptedCmp5                         0    0.000000     int64
+AcceptedCmp4                         0    0.000000     int64
+AcceptedCmp3                         0    0.000000    object
+NumWebVisitsMonth                    0    0.000000     int64
+NumStorePurchases                    0    0.000000     int64
+NumCatalogPurchases                  0    0.000000     int64
+NumWebPurchases                      0    0.000000     int64
+NumDealsPurchases                    0    0.000000     int64
+Z_Revenue                            0    0.000000     int64
+MntGoldProds                         0    0.000000     int64
+MntFishProducts                      0    0.000000     int64
+MntMeatProducts                      0    0.000000     int64
+MntFruits                            0    0.000000     int64
+MntWines                             0    0.000000     int64
+Recency                              0    0.000000     int64
+Dt_Customer                          0    0.000000     int64
+Teenhome                             0    0.000000     int64
+Kidhome                              0    0.000000     int64
+Marital_Status                       0    0.000000     int64
+Education                            0    0.000000     int64
+Year_Birth                           0    0.000000     int64
+MntSweetProducts                     0    0.000000     int64
+Response                             0    0.000000     int64
+```
+
+Berdasarkan hasil analisa awal, dapat diketahui bahwa terdapat data kosong pada kolom income sebanyak 24 baris dengan persentase sebesar 1,07% dari keseluruhan data.
+
+Pada proses handling missing values untuk kolom `Income` ada beberapa metode yang dapat di lakukan :
+- **Drop Rows Missing Values**
+- **Imputation Median**
+    - `Fillna` or `SimpleImputer`
+- **Multivariate Approach**
+    - Perlu dipastikan untuk data yang dimiliki semaunya dalam bentuk tipe numerical (categorical encoding)
+        - `Label Encoding` : `Education`
+            - `LabelEncoder` or `Mapping`
+        - `One Hot Encoding` : `Marital Status`
+            - `get_dummies` or `OneHotEncoder`
+    - Kita juga drop kolom yang tidak penting seperti data tanggal `Dt_Customer`
+    - Metode :
+        - `KNNImputer` or K-Nearest Neighbor
+        - `MICE` or Multiple Imputation by Chained Equation      
+            - Imputation using MICE with `IterativeImputer`
+            - Imputation using MICE with `LightGBM`
+            
+**Choice Determination:**
+
+- Pada proses handling missing values ini kita menggunakan `Imputation using MICE with LightGBM`
+
+**Imputation using `MICE` with `LightGBM`**
+
+```
+import miceforest as mf
+
+# Create kernel. 
+kds = mf.ImputationKernel(
+  df_ma,
+  save_all_iterations=True,
+  random_state=100
+)
+
+# Run the MICE algorithm
+kds.mice(iterations=5, n_estimators=50)
+
+# Return the completed dataset.
+df_imputed = kds.complete_data()
+df["Income"] = df_imputed["Income"].copy()
+df.head()
+```
+
+**Kesimpulan**
+
+Berdasarkan hasil pengecekan, Untuk kolom `Income` terdapat missing values 24 rows (1,07%). Dikarenakan data kita terbatas, sehingga untuk prosesnya kita tidak akan melakukan penghapusan baris (Drop Rows), melainkan dilakukan proses Imputation. 
+
+Pada proses handling missing values ini kita menggunakan `Imputation using MICE with LightGBM`. Imputasi MICE dapat lebih efisien menggunakan `miceforest` karena diharapkan kinerjanya jauh lebih baik karena mengimplementasikan algortima `lightgbm` di backend untuk melakukan imputasi. `LightGBM` dikenal dengan akurasi prediksi yang tinggi. Menggabungkannya dengan algortima `mice` menjadikannya algortima yang kuat untuk imputasi.
+
+
+## **📌 Handling Duplicate Rows**
+
+```html
+df[df.duplicated(keep=False)].sort_values(by=list(df.columns.values))
+
+df.duplicated().sum()
+
+df.duplicated(subset=["ID"]).sum()
+
+-----------------------------------------
+0
+```
+**Kesimpulan**
+
+- Berdasarkan hasil pengecekan, tidak ditemui baris data yang memiliki duplikat. Sehingga kami tidak perlu melakukan handling duplicated data
+- Pada pengecekan duplikat subset untuk ID tidak ditemukan ada nya ID customer yang sama
+
+
+## **📌 Handling Invalid Values**
+
+```html
+===== ID =====
+[5524, 2174, 4141, 6182, 5324, 7446, 965, 6177, 4855, 5899, .....]
+
+===== Year_Birth =====
+[1957, 1954, 1965, 1984, 1981, 1967, 1971, 1985, 1974, 1950, .....]
+
+===== Education =====
+['Graduation', 'PhD', 'Master', 'Basic', '2n Cycle']
+
+===== Marital_Status =====
+['Single', 'Together', 'Married', 'Divorced', 'Widow', 'Alone', 'Absurd', 'YOLO']
+
+===== Income =====
+[58138.0, 46344.0, 71613.0, 26646.0, 58293.0, 62513.0, 55635.0, 33454.0, 30351.0, 5648.0, .....]
+
+===== Kidhome =====
+[0, 1, 2]
+
+===== Teenhome =====
+[0, 1, 2]
+
+===== Dt_Customer =====
+['2012-09-04', '2014-03-08', '2013-08-21', '2014-02-10', '2014-01-19', '2013-09-09', '2012-11-13', '2013-05-08', '2013-06-06', '2014-03-13', .....]
+
+===== Recency =====
+[58, 38, 26, 94, 16, 34, 32, 19, 68, 11, .....]
+
+===== MntWines =====
+[635, 11, 426, 173, 520, 235, 76, 14, 28, 5, .....]
+
+===== MntFruits =====
+[88, 1, 49, 4, 43, 42, 65, 10, 0, 5, .....]
+
+===== MntMeatProducts =====
+[546, 6, 127, 20, 118, 98, 164, 56, 24, 11, .....]
+
+===== MntFishProducts =====
+[172, 2, 111, 10, 46, 0, 50, 3, 1, 11, .....]
+
+===== MntSweetProducts =====
+[88, 1, 21, 3, 27, 42, 49, 2, 112, 5, .....]
+
+===== MntGoldProds =====
+[88, 6, 42, 5, 15, 14, 27, 23, 2, 13, .....]
+
+===== NumDealsPurchases =====
+[3, 2, 1, 5, 4, 15, 7, 0, 6, 9, .....]
+
+===== NumWebPurchases =====
+[8, 1, 2, 5, 6, 7, 4, 3, 11, 0, .....]
+
+===== NumCatalogPurchases =====
+[10, 1, 2, 0, 3, 4, 6, 28, 9, 5, .....]
+
+===== NumStorePurchases =====
+[4, 2, 10, 6, 7, 0, 3, 8, 5, 12, .....]
+
+===== NumWebVisitsMonth =====
+[7, 5, 4, 6, 8, 9, 20, 2, 3, 1, .....]
+
+===== AcceptedCmp3 =====
+[0, 1]
+
+===== AcceptedCmp4 =====
+[0, 1]
+
+===== AcceptedCmp5 =====
+[0, 1]
+
+===== AcceptedCmp1 =====
+[0, 1]
+
+===== AcceptedCmp2 =====
+[0, 1]
+
+===== Complain =====
+[0, 1]
+
+===== Z_CostContact =====
+[3]
+
+===== Z_Revenue =====
+[11]
+
+===== Response =====
+[1, 0]
+```
+
+### **1. Melakukan konversi data `Date`**
+
+Untuk mempermudah dalam proses feature extraction/engineering maka untuk data yang mengandung datetime akan dilakukan konversi ke format datetime pandas
+
+`df["Dt_Customer"] = pd.to_datetime(df["Dt_Customer"])`
+
+### **2. Melakukan penyederhanaan `Marital_Status`**
+
+Akan dilakukan replace data / menyatukan yang memiliki arti yang sama agar mengurangi jumlah dimensi maupun redudansi pada data
+
+- Mengganti kategori `Widow`, `Alone`, `Absurd`, `YOLO` menjadi `Single`
+- Mengganti kategori `Together` menjadi `Married`
+- Mempertahankan kategori `Divorced`
+
+```html
+# Mengganti kategori 'Widow', 'Alone', 'Absurd', 'YOLO' menjadi 'Single'
+df['Marital_Status'] = df['Marital_Status'].replace(['Widow', 'Alone', 'Absurd', 'YOLO'],'Single')
+# Mengganti kategori 'Together' menjadi 'Married'
+df['Marital_Status'] = df['Marital_Status'].replace(['Together'],'Married')
+```
+
+`df['Marital_Status'].unique()`
+
+'Single', 'Married', 'Divorced'
+
+### **3. Melakukan penyederhanaan `Education_Simple`**
+
+Untuk kategori `2n Cycle` dan `Master` juga kurang lebih sama. Maka dari itu, baris yang memiliki kategori `2n Cycle` akan dihapus dan digantikan dengan kategori `Master`.
+
+`df['Education'] = df['Education'].replace(['2n Cycle'],'Master')`
+
+**Kesimpulan**
+
+Berdasarkan hasil pengecekan, Untuk kolom `Dt_Customer` sebelumnya masih berbentuk string/object, untuk tipe datanya kurang sesuai sehingga di ubah menjadi Datetime untuk diolah pada tahap Feature Engineering. Kemudian pada `Marital_Status` dan `Education` replace data / menyatukan yang memiliki arti yang sama agar mengurangi jumlah dimensi maupun redudansi pada data.
+
+
+## **📌 Handling Outliers**
+
+```html
+Column Name	is Outlier	Lower Limit	Upper Limit	Outlier	No Outlier
+0	Year_Birth	True	1932.0	2004.0	3	2237
+1	Income	True	-14290.5	118153.5	8	2232
+2	Kidhome	False	-1.5	2.5	0	2240
+3	Teenhome	False	-1.5	2.5	0	2240
+4	Recency	False	-51.0	149.0	0	2240
+5	MntWines	True	-697.0	1225.0	35	2205
+6	MntFruits	True	-47.0	81.0	227	2013
+7	MntMeatProducts	True	-308.0	556.0	175	2065
+8	MntFishProducts	True	-67.5	120.5	223	2017
+9	MntSweetProducts	True	-47.0	81.0	248	1992
+10	MntGoldProds	True	-61.5	126.5	207	2033
+11	NumDealsPurchases	True	-2.0	6.0	86	2154
+12	NumWebPurchases	True	-4.0	12.0	4	2236
+13	NumCatalogPurchases	True	-6.0	10.0	23	2217
+14	NumStorePurchases	False	-4.5	15.5	0	2240
+15	NumWebVisitsMonth	True	-3.0	13.0	8	2232
+16	Z_CostContact	False	3.0	3.0	0	2240
+17	Z_Revenue	False	11.0	11.0	0	2240
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
