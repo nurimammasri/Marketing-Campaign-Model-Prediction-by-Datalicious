@@ -974,27 +974,7 @@ Berdasarkan hasil pengecekan, Untuk kolom `Dt_Customer` sebelumnya masih berbent
 
 ## **📌 Handling Outliers**
 
-```html
-Column Name	is Outlier	Lower Limit	Upper Limit	Outlier	No Outlier
-0	Year_Birth	True	1932.0	2004.0	3	2237
-1	Income	True	-14290.5	118153.5	8	2232
-2	Kidhome	False	-1.5	2.5	0	2240
-3	Teenhome	False	-1.5	2.5	0	2240
-4	Recency	False	-51.0	149.0	0	2240
-5	MntWines	True	-697.0	1225.0	35	2205
-6	MntFruits	True	-47.0	81.0	227	2013
-7	MntMeatProducts	True	-308.0	556.0	175	2065
-8	MntFishProducts	True	-67.5	120.5	223	2017
-9	MntSweetProducts	True	-47.0	81.0	248	1992
-10	MntGoldProds	True	-61.5	126.5	207	2033
-11	NumDealsPurchases	True	-2.0	6.0	86	2154
-12	NumWebPurchases	True	-4.0	12.0	4	2236
-13	NumCatalogPurchases	True	-6.0	10.0	23	2217
-14	NumStorePurchases	False	-4.5	15.5	0	2240
-15	NumWebVisitsMonth	True	-3.0	13.0	8	2232
-16	Z_CostContact	False	3.0	3.0	0	2240
-17	Z_Revenue	False	11.0	11.0	0	2240
-```
+
 
 
 
