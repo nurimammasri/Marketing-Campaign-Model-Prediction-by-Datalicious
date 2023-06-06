@@ -52,7 +52,6 @@
     * [Business Metrics](#-business-metrics)
 * **Data Preparation**
     * [Data Description](#-data-description-)
-    * Libraries & Datasets
 * **Data Understanding**
     * [Exploring Datasets](#-data-understanding-)
     * [Data Types Information](#-data-types-information)
