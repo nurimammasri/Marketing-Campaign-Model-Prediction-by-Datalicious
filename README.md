@@ -61,15 +61,16 @@
     * [Feature Engineering / Extraction (Business Insight)](#-feature-engineering--extraction)
     * [Business Insight](#-business-insight)
 * **Data Cleansing/Preprocessing**
-    * [Handling Missing Values]()
-    * [Handling Duplicated Rows]()
-    * [Handling Invalid Values]()
-    * [Handling Outliers]()
-    * [Feature Engineering / Extraction]()
-    * [Feature Transformation (Numeric)]()
-    * [Feature Encoding (Categoric)]()
-    * [Feature Selection]()
-    * [Handling Imbalanced Data]()
+    * [Handling Missing Values](#-handling-missing-value)
+    * [Handling Duplicated Rows](#-handling-duplicate-rows)
+    * [Handling Invalid Values](#-handling-invalid-values)
+    * [Handling Outliers](#-handling-outliers)
+    * [Feature Engineering / Extraction](#-feature-engineering--extraction-1)
+    * [Feature Transformation (Numeric)](#-feature-transformation-numeric)
+    * [Feature Encoding (Categoric)](#-feature-encoding-categoric)
+    * [Feature Selection](#-feature-selection)
+    * [Data Splitting](#-data-splitting)
+    * [Handling Imbalanced Data](#-handling-imbalanced-data)
 <!--te-->
 
 ## **⛳ Business Understanding ⛳**
@@ -1431,17 +1432,17 @@ sm = SMOTE(sampling_strategy=0.5, random_state = 2)
 X_balanced_res, y_balanced_res = sm.fit_resample(X_train,y_train)
 ```
 
-Before OverSampling, the shape of X_train: (1677, 15)
-Before OverSampling, the shape of y_train: (1677,) 
+- Before OverSampling, the shape of X_train: (1677, 15)
+- Before OverSampling, the shape of y_train: (1677,) 
 
-Before OverSampling, counts of label '1': 251
-Before OverSampling, counts of label '0': 1426 
+- Before OverSampling, counts of label '1': 251
+- Before OverSampling, counts of label '0': 1426 
 
-After OverSampling, the shape of X_train: (2139, 15)
-After OverSampling, the shape of y_train: (2139,) 
+- After OverSampling, the shape of X_train: (2139, 15)
+- After OverSampling, the shape of y_train: (2139,) 
 
-After OverSampling, counts of label '1': 713
-After OverSampling, counts of label '0': 1426
+- After OverSampling, counts of label '1': 713
+- After OverSampling, counts of label '0': 1426
 
 
 
